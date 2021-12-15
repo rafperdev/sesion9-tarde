@@ -3,10 +3,14 @@ import React, { useEffect, useState } from "react";
 export function VentasListar(props) {
     const [listado, setListado] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:8080/ventas/listar")
+        const token = localStorage.getItem("token");
+        fetch("http://localhost:8080/ventas/listar", {
+            headers: { "authorization": `Bearer ${token}` }
+        })
             .then(res => res.json())
             .then(res => {
-                setListado(res);
+                if (res.estado === "ok")
+                    setListado(res.data);
             })
     }, [props.refresh])
     return (

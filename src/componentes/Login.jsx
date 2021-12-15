@@ -17,7 +17,10 @@ export function Login() {
         }).then(res => res.json())
             .then(res => {
                 if (res.estado === "ok") {
-                    { window.location.href = res.url }
+                    {
+                        localStorage.setItem("token", res.token);
+                        window.location.href = res.url
+                    }
                 } else {
                     setError(true);
                     setMsgError(res.msg);
